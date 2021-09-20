@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Main from './Main/Main';
-//import Race from './Race/Race';
-//import Settings from './Settings/Settings';
+import Race from './Race/Race';
+import Settings from './Settings/Settings';
 
 class ViewManager extends Component {
     static Views() {
         return {
             Main: <Main />,
-            //Race: <Race />,
-            //Settings: <Settings />
+            Race: <Race />,
+            Settings: <Settings />
         }
     }
 
