@@ -1,9 +1,11 @@
 const { app, BrowserWindow, dialog, globalShortcut, ipcMain } = require('electron');
 const contextMenu = require('electron-context-menu');
-const fs = require('fs');
-const path = require('path');
 const Store = require('electron-store');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+const fs = require('fs');
+const path = require('path');
+
+const ContextMenuItems = require('../src/Utilities/ContextMenuItems');
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -14,17 +16,7 @@ contextMenu({
     prepend: (defaultActions, parameters, browserWindow) => [
         {
             label: "Screenshot",
-            click: async () => {
-                const file = `/Splitwatch_${new Date().toISOString().replace(/\:|\./g, "-").replace("T", "_").replace("Z", "")}.png`;
-                const img = await browserWindow.capturePage();
-                const dir = dialog.showOpenDialogSync({
-                    "title": "Select Directory to Save Image",
-                    "properties": [
-                        "openDirectory"
-                    ]
-                })[0];
-                fs.writeFileSync(path.join(dir, file), img.toPNG());
-            }
+            click: ContextMenuItems.screenshot(browserWindow, dialog, fs, path)
         },
         {
             label: "Quit",
