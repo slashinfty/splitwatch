@@ -15,6 +15,7 @@ contextMenu({
         {
             label: "Screenshot",
             click: async () => {
+                const file = `/Splitwatch_${new Date().toISOString().replace(/\:|\./g, "-").replace("T", "_").replace("Z", "")}.png`;
                 const img = await browserWindow.capturePage();
                 const dir = dialog.showOpenDialogSync({
                     "title": "Select Directory to Save Image",
@@ -22,8 +23,7 @@ contextMenu({
                         "openDirectory"
                     ]
                 })[0];
-                const file = path.join(dir, `/Splitwatch_${new Date().toISOString().replace(/\:|\./g, "-").replace("T", "_").replace("Z", "")}.png`);
-                fs.writeFileSync(file, img.toPNG());
+                fs.writeFileSync(path.join(dir, file), img.toPNG());
             }
         },
         {
